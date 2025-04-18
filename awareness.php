@@ -7,7 +7,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Triple Planetary Crisis</title>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add Garet font -->
     <style>
+        @font-face {
+            font-family: 'Garet';
+            src: url('assets/fonts/Garet-Book.woff2') format('woff2'),
+                 url('assets/fonts/Garet-Book.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Garet';
+            src: url('assets/fonts/Garet-Heavy.woff2') format('woff2'),
+                 url('assets/fonts/Garet-Heavy.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+
         /* Global Styles */
         :root {
             --primary-blue: #00a2ff;
@@ -20,7 +39,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', Arial, sans-serif;
         }
 
         body {
@@ -29,6 +47,12 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 0.5s ease-in-out;
+            background-image: url('assets/tripleplanetary1.jpg');
+            font-family: 'Montserrat', Arial, sans-serif;
         }
 
         .container {
@@ -38,7 +62,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(rgba(0, 28, 46, 0.85), rgba(0, 28, 46, 0.85)), url('assets/background.jpg');
+            background: linear-gradient(rgba(0, 28, 46, 0.85), rgba(0, 28, 46, 0.85));
             background-size: cover;
             background-position: center;
             position: relative;
@@ -52,36 +76,66 @@
             flex: 1;
             max-width: 1400px;
             margin: 0 auto;
+            height: calc(100vh - 8rem);
+            position: relative;
         }
 
         .content-left {
             max-width: 65%;
             padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .title {
-            font-size: 4.5rem;
+        .content-wrapper {
+            flex: 1;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .content-wrapper.fade-out {
+            opacity: 0;
+        }
+
+        .main-title {
+            font-family: 'Garet', sans-serif;
             color: var(--primary-blue);
             margin-bottom: 2rem;
             line-height: 1;
             font-weight: 700;
             letter-spacing: -0.02em;
             text-transform: uppercase;
+            transition: all 0.3s ease;
         }
 
-        .description {
+        .main-title .small-text {
+            font-size: 27px;
+            display: block;
+        }
+
+        .main-title .large-text {
+            font-size: 48.8px;
+            display: block;
+        }
+
+        .main-description {
+            font-family: 'Montserrat', Arial, sans-serif;
             font-size: 1.25rem;
             margin-bottom: 1rem;
             max-width: 700px;
-            line-height: 1.5;
+            line-height: 1.6;
+            transition: all 0.3s ease;
         }
 
-        .description strong {
-            color: var(--primary-blue);
+        .main-description strong {
+            color: var(--text-white);
             font-weight: 600;
         }
 
         .sub-description {
+            font-family: 'Montserrat', Arial, sans-serif;
             font-size: 1.1rem;
             margin-bottom: 2rem;
             max-width: 700px;
@@ -91,12 +145,15 @@
 
         /* Button Styles */
         .button-group {
+            position: absolute;
+            bottom: 4rem;
+            left: 0;
             display: flex;
             gap: 1rem;
-            margin-top: 3rem;
         }
 
         .learn-more, .how-to-help {
+            font-family: 'Montserrat', Arial, sans-serif;
             padding: 1rem 2rem;
             border: none;
             border-radius: 6px;
@@ -175,6 +232,7 @@
         }
 
         .image-label {
+            font-family: 'Garet', sans-serif;
             position: absolute;
             bottom: 2.5rem;
             left: 1.2rem;
@@ -187,6 +245,7 @@
         }
 
         .subtitle {
+            font-family: 'Montserrat', Arial, sans-serif;
             position: absolute;
             bottom: 1.2rem;
             left: 1.2rem;
@@ -213,7 +272,7 @@
             opacity: 0.9;
         }
 
-        /* Modal Styles */
+        /* Modal Styles Update */
         .modal {
             display: none;
             position: fixed;
@@ -221,7 +280,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0, 0, 0, 0.75);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -233,17 +292,17 @@
 
         .modal-content {
             position: relative;
-            background-color: var(--modal-bg);
-            margin: 5% auto;
-            padding: 3rem;
+            background: linear-gradient(135deg, #0f2d54 0%, #0c4d50 100%);
+            margin: 10vh auto;
+            padding: 2.5rem;
             width: 90%;
             max-width: 800px;
-            border-radius: 15px;
+            border-radius: 20px;
             color: white;
             transform: translateY(-20px);
             opacity: 0;
             transition: all 0.4s ease;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .modal.active .modal-content {
@@ -251,69 +310,94 @@
             opacity: 1;
         }
 
-        .close {
-            position: absolute;
-            right: 1.5rem;
-            top: 1.5rem;
+        .modal-content h2 {
+            font-family: 'Montserrat', sans-serif;
             font-size: 2rem;
-            cursor: pointer;
             color: white;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-            width: 40px;
-            height: 40px;
+            margin-bottom: 1.8rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: rgba(255,255,255,0.1);
+            gap: 12px;
         }
 
-        .close:hover {
-            opacity: 1;
-            background-color: rgba(255,255,255,0.2);
-            transform: rotate(90deg);
+        .modal-content h2 img {
+            width: 24px;
+            height: 24px;
         }
 
-        .modal h2 {
-            color: var(--primary-blue);
+        .modal-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
             margin-bottom: 1.5rem;
-            font-size: 2rem;
+            color: white;
+        }
+
+        .modal-content strong {
+            color: white;
             font-weight: 600;
         }
 
-        .modal p {
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-content li {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.15rem;
             margin-bottom: 1.2rem;
-            line-height: 1.6;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .modal ul {
-            list-style-position: inside;
-            margin-bottom: 2rem;
-        }
-
-        .modal li {
-            margin-bottom: 1rem;
             line-height: 1.5;
-            font-size: 1.1rem;
-            opacity: 0.9;
-            padding-left: 1rem;
-            position: relative;
+            color: white;
+            display: flex;
+            align-items: flex-start;
         }
 
-        .modal li::before {
-            content: '•';
-            color: var(--primary-blue);
+        .modal-content li strong {
+            color: white;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            min-width: fit-content;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            color: white;
+            margin: 2rem 0 1.2rem;
+            font-weight: 600;
+        }
+
+        .close {
             position: absolute;
-            left: 0;
-            font-weight: bold;
+            right: 1.2rem;
+            top: 1.2rem;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
         }
 
         /* Footer Styles */
         .footer {
-            background-color: rgba(0, 162, 255, 0.1);
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(90deg, #0f2d54 0%, #0c4d50 100%);
             color: white;
             text-align: center;
             padding: 1rem;
@@ -326,6 +410,35 @@
         }
 
         /* Responsive Design */
+        @media (min-width: 1600px) {
+            .container {
+                padding: 6rem;
+            }
+
+            .main-content {
+                max-width: 1800px;
+                height: calc(100vh - 12rem);
+            }
+
+            .image-card {
+                height: 220px;
+            }
+        }
+
+        @media (max-height: 800px) {
+            .container {
+                padding: 2rem;
+            }
+
+            .main-content {
+                height: calc(100vh - 4rem);
+            }
+
+            .button-group {
+                bottom: 2rem;
+            }
+        }
+
         @media (max-width: 1200px) {
             .container {
                 padding: 2rem;
@@ -335,7 +448,7 @@
                 gap: 2rem;
             }
 
-            .title {
+            .main-title {
                 font-size: 3.5rem;
             }
         }
@@ -359,7 +472,7 @@
                 height: 150px;
             }
             
-            .title {
+            .main-title {
                 font-size: 3rem;
             }
 
@@ -378,18 +491,53 @@
     <div class="container">
         <div class="main-content" id="main-content">
             <div class="content-left">
-                <h1 class="title">THE<br>TRIPLE<br>PLANETARY CRISIS</h1>
-                <p class="description">
-                    The TPC refers to three interconnected environmental threats caused by human activity: 
-                    <strong>Pollution, Climate Change, and Biodiversity Loss</strong>.
+                <div class="content-wrapper" id="mainContent">
+                    <h1 class="main-title">
+                        <span class="small-text">THE</span>
+                        <span class="large-text">TRIPLE<br>PLANETARY CRISIS</span>
+                    </h1>
+                    <p class="main-description">
+                        The TPC refers to three <strong>interconnected environmental threats</strong> caused by human activity: <strong>Pollution, Climate Change, and Biodiversity Loss</strong>.
                 </p>
                 <p class="sub-description">
-                    These problems might sound overwhelming, but knowledge is power! Keep reading to uncover the causes, impacts, and—most importantly—how YOU can make a difference.
-                </p>
+                        These problems might sound overwhelming, but knowledge is power! Keep reading to uncover the causes, impacts, and—most importantly—<strong>how YOU can make a difference</strong>.
+                    </p>
+                </div>
+
+                <!-- Pollution Content -->
+                <div class="content-wrapper" id="pollutionContent" style="display: none;">
+                    <h1 class="main-title">
+                        <span class="large-text">Pollution</span>
+                    </h1>
+                    <p class="main-description">
+                        Pollution exists in many forms—air, water, soil, and plastic waste. Factories, vehicles, and improper waste disposal introduce harmful chemicals into our surroundings. Burning fossil fuels (coal, oil, gas) releases pollutants that poison the air we breathe and disrupt ecosystems.
+                    </p>
+                </div>
+
+                <!-- Climate Change Content -->
+                <div class="content-wrapper" id="climateContent" style="display: none;">
+                    <h1 class="main-title">
+                        <span class="large-text">Climate Change</span>
+                    </h1>
+                    <p class="main-description">
+                        Climate change results from <strong>greenhouse gases</strong>—mainly from burning fossil fuels—which trap heat in the atmosphere, leading to a warming Earth, rising sea levels, and extreme weather patterns.
+                    </p>
+                </div>
+
+                <!-- Biodiversity Loss Content -->
+                <div class="content-wrapper" id="biodiversityContent" style="display: none;">
+                    <h1 class="main-title">
+                        <span class="large-text">Biodiversity Loss</span>
+                    </h1>
+                    <p class="main-description">
+                        Nature thrives on balance, but human activities disrupt ecosystems, leading to the <strong>loss of plant and animal species at alarming rates</strong>. Deforestation and pollution force countless species to <strong>struggle for survival</strong>.
+                    </p>
+                </div>
+
                 <div class="button-group">
                     <button class="learn-more">Learn more ≫</button>
                     <button class="how-to-help">
-                        <img src="assets/globe-icon.png" alt="Globe" class="globe-icon">
+                        <img src="assets/globe-icon.jpg" alt="Globe" class="globe-icon">
                         How to help
                     </button>
                 </div>
@@ -415,47 +563,28 @@
         </div>
     </div>
 
-    <!-- Modal for Learn More -->
+    <!-- Learn More Modal -->
     <div class="modal" id="learnMoreModal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <button class="close">×</button>
             <h2>What's Really Happening to Our Planet?</h2>
-            <p>Imagine waking up to skies thick with smog, oceans choked with plastic, and forests reduced to barren wastelands. This isn't science fiction—it's our reality.</p>
-            <p>Pollution, climate change, and biodiversity loss are pushing Earth to its limits. Together, these crises form the Triple Planetary Crisis (TPC)—an urgent environmental challenge that affects everyone, from bustling cities to remote villages.</p>
-            <p>But here's the good news: we still have time to act!</p>
+            <p>Imagine waking up to skies thick with smog, oceans choked with plastic, and forests reduced to barren wastelands. <strong>This isn't science fiction—it's our reality.</strong></p>
+            <p>Pollution, climate change, and biodiversity loss are pushing Earth to its limits. Together, these crises form the <strong>Triple Planetary Crisis (TPC)</strong>—an urgent environmental challenge that affects everyone, from bustling cities to remote villages.</p>
+            <p>But here's the good news: <strong>we still have time to act!</strong></p>
         </div>
     </div>
 
-    <!-- Modal for How to Help -->
-    <div class="modal" id="howToHelpModal">
+    <!-- Pollution Modal -->
+    <div class="modal" id="pollutionModal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ways to Combat the Triple Planetary Crisis</h2>
-            <ul>
-                <li>Reduce Carbon Footprint: Choose sustainable transportation, energy-efficient appliances, and renewable energy sources</li>
-                <li>Conserve Energy: Turn off unused electronics and lights; consider solar panels for your home</li>
-                <li>Protect Habitats: Participate in reforestation and conservation projects</li>
-                <li>Support Sustainable Practices: Promote eco-friendly farming and fishing</li>
-                <li>Minimize Plastic Usage: Opt for reusable items like eco-bags and stainless containers</li>
-                <li>Dispose of Waste Responsibly: Recycle, compost, and properly discard hazardous waste</li>
-                <li>Back Eco-Friendly Industries: Support businesses and policies that reduce pollution</li>
-                <li>Raise Awareness: Share knowledge and advocate for green initiatives</li>
-                <li>Engage in Environmental Campaigns: Take action locally or globally</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Category Modals -->
-    <div class="modal category-modal" id="pollutionModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
+            <button class="close">×</button>
             <h2>🚨 Causes of Pollution</h2>
             <ul>
                 <li>Heavy reliance on fossil fuels for energy and transportation</li>
                 <li>Industrial waste dumping and improper waste management</li>
                 <li>Excessive plastic use and lack of recycling</li>
             </ul>
-            <h2>💥 Impacts of Pollution</h2>
+            <div class="section-title">💥 Impacts of Pollution</div>
             <ul>
                 <li>Human Health: Causes respiratory diseases, water contamination, and other health problems.</li>
                 <li>Economic Burden: Pollution-related illnesses increase healthcare costs and reduce productivity.</li>
@@ -464,9 +593,10 @@
         </div>
     </div>
 
-    <div class="modal category-modal" id="climateModal">
+    <!-- Climate Change Modal -->
+    <div class="modal" id="climateModal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <button class="close">×</button>
             <h2>🔥 Causes of Climate Change</h2>
             <ul>
                 <li>Burning fossil fuels like coal, oil, and gas for energy.</li>
@@ -474,7 +604,7 @@
                 <li>Excessive emissions from vehicles, factories, and power plants.</li>
                 <li>Unsustainable farming and waste.</li>
             </ul>
-            <h2>🌍 Impacts of Climate Change</h2>
+            <div class="section-title">🌍 Impacts of Climate Change</div>
             <ul>
                 <li>More frequent storms, droughts, and heat waves.</li>
                 <li>Rising sea levels threatening coastal communities.</li>
@@ -484,21 +614,41 @@
         </div>
     </div>
 
-    <div class="modal category-modal" id="biodiversityModal">
+    <!-- Biodiversity Loss Modal -->
+    <div class="modal" id="biodiversityModal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <button class="close">×</button>
             <h2>⭕ Causes of Biodiversity Loss</h2>
             <ul>
                 <li>Land clearing for mining and energy production.</li>
                 <li>Pollution destroying habitats and food sources.</li>
                 <li>Overexploitation of natural resources without restoration efforts.</li>
             </ul>
-            <h2>🌱 Impacts of Biodiversity Loss</h2>
+            <div class="section-title">🌱 Impacts of Biodiversity Loss</div>
             <ul>
                 <li>Ecosystem Collapse: Loss of essential species weakens food chains and disrupts nature's balance.</li>
                 <li>Declining Natural Resources: Fewer fish, plants, and animals for food and medicine.</li>
                 <li>Disrupted agriculture and food supply.</li>
                 <li>Reduced Climate Resilience: Less biodiversity makes it harder for nature to adapt to climate change.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- How to Help Modal -->
+    <div class="modal" id="howToHelpModal">
+        <div class="modal-content">
+            <button class="close">×</button>
+            <h2>Ways to Combat the Triple Planetary Crisis</h2>
+            <ul>
+                <li><strong>Reduce Carbon Footprint:</strong> Choose sustainable transportation, energy-efficient appliances, and renewable energy sources</li>
+                <li><strong>Conserve Energy:</strong> Turn off unused electronics and lights; consider solar panels for your home</li>
+                <li><strong>Protect Habitats:</strong> Participate in reforestation and conservation projects</li>
+                <li><strong>Support Sustainable Practices:</strong> Promote eco-friendly farming and fishing</li>
+                <li><strong>Minimize Plastic Usage:</strong> Opt for reusable items like eco-bags and stainless containers</li>
+                <li><strong>Dispose of Waste Responsibly:</strong> Recycle, compost, and properly discard hazardous waste</li>
+                <li><strong>Back Eco-Friendly Industries:</strong> Support businesses and policies that reduce pollution</li>
+                <li><strong>Raise Awareness:</strong> Share knowledge and advocate for green initiatives</li>
+                <li><strong>Engage in Environmental Campaigns:</strong> Take action locally or globally</li>
             </ul>
         </div>
     </div>
@@ -509,94 +659,176 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get DOM elements
+            const imageCards = document.querySelectorAll('.image-card');
+            const mainContent = document.getElementById('mainContent');
+            const pollutionContent = document.getElementById('pollutionContent');
+            const climateContent = document.getElementById('climateContent');
+            const biodiversityContent = document.getElementById('biodiversityContent');
             const learnMoreBtn = document.querySelector('.learn-more');
             const howToHelpBtn = document.querySelector('.how-to-help');
-            const imageCards = document.querySelectorAll('.image-card');
-            const modals = document.querySelectorAll('.modal');
-            const closeButtons = document.querySelectorAll('.close');
+            const learnMoreModal = document.getElementById('learnMoreModal');
+            const howToHelpModal = document.getElementById('howToHelpModal');
+            const body = document.querySelector('body');
 
-            // Modal handling functions
-            function openModal(modalId) {
-                const modal = document.getElementById(modalId);
-                modal.style.display = 'block';
-                // Force reflow
-                modal.offsetHeight;
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            let currentSection = 'main';
+
+            async function updateContent(section) {
+                // Add fade out effect
+                const currentContent = document.querySelector('.content-wrapper[style="display: block"]');
+                if (currentContent) {
+                    currentContent.classList.add('fade-out');
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+
+                // Hide all content first
+                document.querySelectorAll('.content-wrapper').forEach(content => {
+                    content.style.display = 'none';
+                    content.classList.remove('fade-out');
+                });
+
+                // Show selected content with fade in
+                let targetContent;
+                if (section === 'main') {
+                    targetContent = mainContent;
+                    body.style.backgroundImage = "url('assets/tripleplanetary1.jpg')";
+                } else if (section === 'pollution') {
+                    targetContent = pollutionContent;
+                    body.style.backgroundImage = "url('assets/pollution1.jpg')";
+                } else if (section === 'climate') {
+                    targetContent = climateContent;
+                    body.style.backgroundImage = "url('assets/climate_change1.jpg')";
+                } else if (section === 'biodiversity') {
+                    targetContent = biodiversityContent;
+                    body.style.backgroundImage = "url('assets/bioloss1.jpg')";
+                }
+
+                if (targetContent) {
+                    targetContent.style.display = 'block';
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                    targetContent.classList.remove('fade-out');
+                }
+
+                currentSection = section;
             }
 
-            function closeModal(modal) {
+            function attachCloseHandlers() {
+                document.querySelectorAll('.close').forEach(closeBtn => {
+                    closeBtn.addEventListener('click', () => {
+                        const modal = closeBtn.closest('.modal');
                 modal.classList.remove('active');
                 setTimeout(() => {
                     modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }, 300); // Match the transition duration
+                        }, 300);
+                    });
+                });
             }
 
-            // Add hover effects for image cards
-            imageCards.forEach(card => {
-                const label = card.querySelector('.image-label');
-                const subtitle = card.querySelector('.subtitle');
+            function showLearnMoreContent() {
+                const modalContent = learnMoreModal.querySelector('.modal-content');
                 
-                card.addEventListener('mouseenter', () => {
-                    label.style.transform = 'translateY(-5px)';
-                    subtitle.style.transform = 'translateY(-5px)';
-                });
+                // Clear existing content
+                modalContent.innerHTML = '<button class="close">×</button>';
+
+                if (currentSection === 'main') {
+                    modalContent.innerHTML += `
+                        <h2>What's Really Happening to Our Planet?</h2>
+                        <p>Imagine waking up to skies thick with smog, oceans choked with plastic, and forests reduced to barren wastelands. <strong>This isn't science fiction—it's our reality.</strong></p>
+                        <p>Pollution, climate change, and biodiversity loss are pushing Earth to its limits. Together, these crises form the <strong>Triple Planetary Crisis (TPC)</strong>—an urgent environmental challenge that affects everyone, from bustling cities to remote villages.</p>
+                        <p>But here's the good news: <strong>we still have time to act!</strong></p>
+                    `;
+                } else if (currentSection === 'pollution') {
+                    modalContent.innerHTML += `
+                        <h2>🚨 Causes of Pollution</h2>
+                        <ul>
+                            <li>Heavy reliance on fossil fuels for energy and transportation</li>
+                            <li>Industrial waste dumping and improper waste management</li>
+                            <li>Excessive plastic use and lack of recycling</li>
+                        </ul>
+                        <div class="section-title">💥 Impacts of Pollution</div>
+                        <ul>
+                            <li>Human Health: Causes respiratory diseases, water contamination, and other health problems.</li>
+                            <li>Economic Burden: Pollution-related illnesses increase healthcare costs and reduce productivity.</li>
+                            <li>Environmental Damage: Toxic substances seep into soil and water, harming wildlife and crops.</li>
+                        </ul>
+                    `;
+                } else if (currentSection === 'climate') {
+                    modalContent.innerHTML += `
+                        <h2>🔥 Causes of Climate Change</h2>
+                        <ul>
+                            <li>Burning fossil fuels like coal, oil, and gas for energy.</li>
+                            <li>Deforestation for land and industry.</li>
+                            <li>Excessive emissions from vehicles, factories, and power plants.</li>
+                            <li>Unsustainable farming and waste.</li>
+                        </ul>
+                        <div class="section-title">🌍 Impacts of Climate Change</div>
+                        <ul>
+                            <li>More frequent storms, droughts, and heat waves.</li>
+                            <li>Rising sea levels threatening coastal communities.</li>
+                            <li>Disrupted agriculture and food supply.</li>
+                            <li>Warmer temperatures accelerating the spread of harmful bacteria.</li>
+                        </ul>
+                    `;
+                } else if (currentSection === 'biodiversity') {
+                    modalContent.innerHTML += `
+                        <h2>⭕ Causes of Biodiversity Loss</h2>
+                        <ul>
+                            <li>Land clearing for mining and energy production.</li>
+                            <li>Pollution destroying habitats and food sources.</li>
+                            <li>Overexploitation of natural resources without restoration efforts.</li>
+                        </ul>
+                        <div class="section-title">🌱 Impacts of Biodiversity Loss</div>
+                        <ul>
+                            <li>Ecosystem Collapse: Loss of essential species weakens food chains and disrupts nature's balance.</li>
+                            <li>Declining Natural Resources: Fewer fish, plants, and animals for food and medicine.</li>
+                            <li>Disrupted agriculture and food supply.</li>
+                            <li>Reduced Climate Resilience: Less biodiversity makes it harder for nature to adapt to climate change.</li>
+                        </ul>
+                    `;
+                }
                 
-                card.addEventListener('mouseleave', () => {
-                    label.style.transform = 'translateY(0)';
-                    subtitle.style.transform = 'translateY(0)';
-                });
-            });
+                // Reattach close button handlers after updating content
+                attachCloseHandlers();
+            }
 
-            // Event Listeners
-            learnMoreBtn.addEventListener('click', () => openModal('learnMoreModal'));
-            howToHelpBtn.addEventListener('click', () => openModal('howToHelpModal'));
-
-            // Add click events for image cards
             imageCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const category = card.dataset.category;
-                    openModal(`${category}Modal`);
-                });
-            });
-
-            // Close button functionality
-            closeButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const modal = button.closest('.modal');
-                    closeModal(modal);
-                });
-            });
-
-            // Close modal when clicking outside
-            window.addEventListener('click', (e) => {
-                modals.forEach(modal => {
-                    if (e.target === modal) {
-                        closeModal(modal);
+                    if (currentSection === category) {
+                        updateContent('main');
+                    } else {
+                        updateContent(category);
                     }
                 });
             });
 
-            // Close modal with Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    modals.forEach(modal => {
-                        if (modal.style.display === 'block') {
-                            closeModal(modal);
-                        }
-                    });
+            // Learn More button click handler
+            learnMoreBtn.addEventListener('click', () => {
+                showLearnMoreContent();
+                learnMoreModal.style.display = 'block';
+                setTimeout(() => learnMoreModal.classList.add('active'), 10);
+            });
+
+            // How to Help button click handler
+            howToHelpBtn.addEventListener('click', () => {
+                howToHelpModal.style.display = 'block';
+                setTimeout(() => howToHelpModal.classList.add('active'), 10);
+            });
+
+            // Initial attachment of close handlers
+            attachCloseHandlers();
+
+            // Click outside modal to close
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('active');
+                    setTimeout(() => {
+                        e.target.style.display = 'none';
+                    }, 300);
                 }
             });
 
-            // Prevent modal content clicks from closing the modal
-            document.querySelectorAll('.modal-content').forEach(content => {
-                content.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                });
-            });
+            // Initialize with main content
+            updateContent('main');
         });
     </script>
 </body>
